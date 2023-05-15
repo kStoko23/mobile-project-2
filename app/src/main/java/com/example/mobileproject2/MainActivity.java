@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
-import com.example.mobileproject2.R;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.BufferedReader;
@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button currentSelectedButton;
     private List<Integer> playedSequence = new ArrayList<>();
-    private static final String SEQUENCE_FILENAME = "sequence.txt";
+    private static final String SequenceTxt = "sequence.txt";
     private Handler sequenceHandler = new Handler();
 
     @Override
@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void saveSequenceToFile() {
 
-        try (FileOutputStream fos = openFileOutput(SEQUENCE_FILENAME, MODE_PRIVATE)) {
+        try (FileOutputStream fos = openFileOutput(SequenceTxt, MODE_PRIVATE)) {
             for (Integer soundResourceId : playedSequence) {
                 String line = String.valueOf(soundResourceId) + "\n";
                 fos.write(line.getBytes());
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("Sequence saved to file");
     }
     private void playSequenceFromFile() {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(openFileInput(SEQUENCE_FILENAME)))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(openFileInput(SequenceTxt)))) {
             String line;
             int delay = 0;
             while ((line = reader.readLine()) != null) {
@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                         });
                     }
                 }, delay);
-                delay += 500; // Adjust this value to change the delay between sounds
+                delay += 500;
             }
         } catch (IOException e) {
             e.printStackTrace();
